@@ -52,3 +52,43 @@ variable "tags" {
     tag2 = ""
   }
 }
+
+variable "virtual_machine_id" {
+  description = "(Required) The ID of the Virtual Machine to which the Data Disk should be attached. Changing this forces a new resource to be created."
+}
+
+variable "lun" {
+  description = "(Required) The Logical Unit Number of the Data Disk, which needs to be unique within the Virtual Machine. Changing this forces a new resource to be created."
+}
+
+variable "caching" {
+  description = "(Required) Specifies the caching requirements for this Data Disk. Possible values include None, ReadOnly and ReadWrite."
+  default     = "None"
+}
+
+variable "enable_vm_extention" {
+  description = "(Required) Should be true if a vm extention is used"
+  default     = "false"
+}
+
+variable "publisher" {
+  type        = "string"
+  description = "(Required) publisher of vm extension"
+}
+
+variable "type" {
+  type        = "string"
+  description = "(Required) type of vm extension"
+}
+
+variable "type_handler_version" {
+  description = "(Required) type_handler_version of vm extension"
+}
+
+variable "fileUris" {
+  description = "(Required) URI of git or blog storage where shell for mounting data disk is stored"
+}
+
+variable "script_path" {
+  description = "(Required) script path for mouting data disk"
+}

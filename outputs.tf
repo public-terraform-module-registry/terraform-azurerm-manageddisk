@@ -32,3 +32,23 @@ output "disk_size_gb" {
   description = "Tells the disk_size_gb provided by input."
   value       = "${var.disk_size_gb}"
 }
+
+output "storage_account_type" {
+  description = "Tells the storage_account_type provided by input."
+  value       = "${var.storage_account_type}"
+}
+
+output "lun" {
+  description = "Tells the lun provided by input."
+  value       = "${var.lun}"
+}
+
+output "caching" {
+  description = "Tells the lun provided by input."
+  value       = "${var.caching}"
+}
+
+output "virtual_machine_id" {
+  description = "Tells the virtual_machine_id provided by input."
+  value       = "${var.virtual_machine_id}"
+}

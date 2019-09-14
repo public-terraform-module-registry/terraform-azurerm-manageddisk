@@ -3,6 +3,10 @@ provider "azurerm" {
   #version = "~> 0.3"
 }
 
+terraform {
+  required_version = "~> 0.11.1"
+}
+
 data "azurerm_resource_group" "passed" {
   name = "${var.resource_group_name}"
 }
@@ -35,4 +39,35 @@ resource "azurerm_managed_disk" "disk" {
   source_resource_id   = "${var.source_resource_id}"
   image_reference_id   = "${var.image_reference_id}"
   disk_size_gb         = "${var.disk_size_gb}"
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "disk" {
+  managed_disk_id    = "${azurerm_managed_disk.disk.id}"
+  virtual_machine_id = "${var,virtual_machine_id}"
+  lun                = "${var.lun}"
+  caching            = "${var.caching}"
+
+  depend_on = ["azurerm_managed_disk.disk"]
+}
+
+resource "azurerm_virtual_machine_extension" "vm" {
+  count                = "${var.enable_vm_extetion == "true"? 1 : 0}"
+  name                 = "${var.vm_hostname}-extension"
+  location             = "${var.location}"
+  resource_group_name  = "${data.azurerm_resource_group.passed.name}"
+  virtual_machine_name = "${var.vm_hostname}"
+  publisher            = "${var.publisher}"
+  type                 = "${var.type}"
+  type_handler_version = "${var.type_handler_version}"
+
+  settings = <<SETTINGS
+  {   "fileUris": [ "${var.fileUris}" ],
+      "commandToExecute": "${var.script_path}"
+  }
+
+  SETTINGS
+
+  tags = "${var.tags}"
+
+  depends_on = ["azurerm_managed_disk.disk", "azurerm_virtual_machine_data_disk_attachment.disk"]
 }
