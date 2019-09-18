@@ -43,7 +43,7 @@ resource "azurerm_managed_disk" "disk" {
 
 resource "azurerm_virtual_machine_data_disk_attachment" "disk" {
   managed_disk_id    = "${azurerm_managed_disk.disk.id}"
-  virtual_machine_id = "${var,virtual_machine_id}"
+  virtual_machine_id = "${var.virtual_machine_id}"
   lun                = "${var.lun}"
   caching            = "${var.caching}"
 
@@ -51,7 +51,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "disk" {
 }
 
 resource "azurerm_virtual_machine_extension" "vm" {
-  count                = "${var.enable_vm_extetion == "true"? 1 : 0}"
+  count                = "${var.enable_vm_extention == "true"? 1 : 0}"
   name                 = "${var.vm_hostname}-extension"
   location             = "${var.location}"
   resource_group_name  = "${data.azurerm_resource_group.passed.name}"

@@ -71,6 +71,10 @@ variable "enable_vm_extention" {
   default     = "false"
 }
 
+variable "vm_hostname" {
+  description = "(Required) hostname of a virtual machine which is enabled vm_extention"
+}
+
 variable "publisher" {
   type        = "string"
   description = "(Required) publisher of vm extension"
