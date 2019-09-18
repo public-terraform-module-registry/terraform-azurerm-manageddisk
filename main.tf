@@ -47,7 +47,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "disk" {
   lun                = "${var.lun}"
   caching            = "${var.caching}"
 
-  depend_on = ["azurerm_managed_disk.disk"]
+  depends_on = ["azurerm_managed_disk.disk"]
 }
 
 resource "azurerm_virtual_machine_extension" "vm" {
